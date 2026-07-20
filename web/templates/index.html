@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>PC Monitor</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+
+<body>
+<div class="card">
+    <!-- CPU -->
+    <div class="page active" id="cpu-page">
+        <h3>CPU</h3>
+        <div class="row">
+            <span>Total</span>
+            <span id="cpu">0%</span>
+        </div>
+        <div class="bar">
+            <div id="cpu-bar" class="fill"></div>
+        </div>
+        <h4>CPU Cores</h4>
+        <div id="cpu-cores"></div>
+    </div>
+
+    <!-- GPU -->
+    <div class="page" id="gpu-page">
+        <h3>GPU</h3>
+        <div class="row">
+            <span>Name</span>
+            <span id="name">-</span>
+        </div>
+        <div class="row">
+            <span>Load</span>
+            <span id="gpu">0%</span>
+        </div>
+        <div class="row">
+            <span>Memory total</span>
+            <span id="memory_total">0GB</span>
+        </div>
+        <div class="row">
+            <span>Memory used</span>
+            <span id="memory_used">0GB</span>
+        </div>
+        <div class="row">
+            <span>Memory free</span>
+            <span id="memory_free">0GB</span>
+        </div>
+        <div class="row">
+            <span>Power</span>
+            <span id="power">0 W</span>
+        </div>
+        <div class="row">
+            <span>Temperature</span>
+            <span id="temp">0°C</span>
+        </div>
+        <div class="row">
+            <span>Fan speed</span>
+            <span id="fan_speed">0 %</span>
+        </div>
+    </div>
+
+    <!-- RAM -->
+    <div class="page" id="ram-page">
+        <h3>RAM</h3>
+        <div class="row">
+            <span>Usage</span>
+            <span id="ram">0%</span>
+        </div>
+        <div class="bar">
+            <div id="ram-bar" class="fill"></div>
+        </div>
+        <div class="row">
+            <span>Used</span>
+            <span id="ram-used">0 GB</span>
+        </div>
+        <div class="row">
+            <span>Free</span>
+            <span id="ram-free">0 GB</span>
+        </div>
+        <div class="row">
+            <span>RAM 1</span>
+            <span id="module1-size">0 GB</span>
+            <span id="module1-speed">0 MHz</span>
+        </div>
+        <div class="row">
+            <span>RAM 2</span>
+            <span id="module2-size">0 GB</span>
+            <span id="module2-speed">0 MHz</span>
+        </div>
+    </div>
+
+    <!-- NETWORK -->
+    <div class="page" id="network-page">
+        <h3>NETWORK</h3>
+        <div class="row">
+            <span>Download</span>
+            <span id="download">0 Mbps</span>
+        </div>
+        <div class="row">
+            <span>Upload</span>
+            <span id="upload">0 Mbps</span>
+        </div>
+         <div class="row">
+            <span>Total download</span>
+            <span id="total_download">0 Mbps</span>
+        </div>
+        <div class="row">
+            <span>Total upload</span>
+            <span id="total_upload">0 Mbps</span>
+        </div>
+    </div>
+</div>
+<script src="/static/app.js"></script>
+</body>
+</html>
