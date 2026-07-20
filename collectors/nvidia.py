@@ -13,8 +13,8 @@ def get_nvidia():
         "temperature": nvmlDeviceGetTemperature(handle, 0),
         "gpu_load": nvmlDeviceGetUtilizationRates(handle).gpu,
         "memory_total": gpu.total / 1024**3,
-        "memory_used": gpu.used / 1024**3,
-        "memory_free": gpu.free / 1024**3,
-        "power": nvmlDeviceGetPowerUsage(handle) / 1000,
+        "memory_used": round(gpu.used / 1024**3, 2),
+        "memory_free": round(gpu.free / 1024**3, 2),
+        "power": round(nvmlDeviceGetPowerUsage(handle) / 1000, 1),
         "fan_speed": nvmlDeviceGetFanSpeed(handle)
     }
