@@ -1,4 +1,3 @@
-import psutil
 import threading
 import time
 
@@ -12,8 +11,6 @@ from data.store import stats
 
 def monitor():
     while True:
-
-        ram = psutil.virtual_memory()
 
         stats.update({
             "cpu": get_cpu(),
