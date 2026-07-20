@@ -6,7 +6,7 @@ from collectors.disk import get_disks
 from collectors.network import get_network
 from collectors.nvidia import get_nvidia
 
-stats = {}
+from data.store import stats
 
 def monitor():
     while True:
