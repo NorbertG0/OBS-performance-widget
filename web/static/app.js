@@ -339,7 +339,7 @@ setInterval(updateStats, 1000);
 
 setInterval(switchCpuCores, 5000);
 
-setInterval(switchPage, 5000);
+setInterval(switchPage, 15000);
 
 renderCpuCores();
 
