@@ -34,7 +34,7 @@
         <h4><i data-lucide="monitor" class="main-card-icon"></i>GPU</h4>
         <div class="gpu-row">
             <span>Name</span>
-            <span id="name">-</span>
+            <span id="name" class="gpu-name">-</span>
         </div>
         <div class="gpu-row">
             <span>Load</span>
@@ -97,21 +97,24 @@
     <!-- NETWORK -->
     <div class="page" id="network-page">
         <h4><i data-lucide="wifi" class="main-card-icon"></i>NETWORK</h4>
-        <div class="row">
+        <div class="network-row">
             <span><i data-lucide="arrow-down" class="download-icon"></i>Download</span>
             <span id="download">0 Mbps</span>
         </div>
-        <div class="row">
+        <div class="network-row">
             <span><i data-lucide="arrow-up" class="upload-icon"></i>Upload</span>
             <span id="upload">0 Mbps</span>
         </div>
-         <div class="row">
+         <div class="network-row">
             <span><i data-lucide="arrow-down" class="download-icon"></i>Total download</span>
             <span id="total_download">0 Mbps</span>
         </div>
-        <div class="row">
+        <div class="network-row">
             <span><i data-lucide="arrow-up" class="upload-icon"></i>Total upload</span>
             <span id="total_upload">0 Mbps</span>
+        </div>
+        <div class="network-chart">
+            <canvas id="network-chart"></canvas>
         </div>
     </div>
 </div>

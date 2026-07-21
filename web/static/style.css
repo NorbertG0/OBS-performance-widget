@@ -8,7 +8,7 @@ body {
     width: 320px;
     min-height: 260px;
     padding: 20px;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0,0,0,0.9);
     color:white;
     border-radius:15px;
     overflow:hidden;
@@ -18,6 +18,17 @@ h2 {
     margin-top:0;
     text-align:center;
 }
+
+.gpu-name {
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: right;
+    color:#ccc;
+    font-size:14px;
+}
+
 
 h3 {
     margin-top:10px;
@@ -51,10 +62,24 @@ h5 {
     font-size:15px;
 }
 
+.gpu-row span:last-child,
+.ram-row span:last-child,
+.network-row span:last-child
+{
+    font-weight:700;
+}
+
 .ram-row {
     display:flex;
     justify-content:space-between;
     margin:12px 0;
+    font-size:15px;
+}
+
+.network-row {
+    display:flex;
+    justify-content:space-between;
+    margin:14px 0;
     font-size:15px;
 }
 
@@ -68,9 +93,15 @@ h5 {
 .fill {
     height:100%;
     width:0%;
-    background:#00ff88;
-    border-radius:5px;
-    transition: width 0.8s linear;
+    background:linear-gradient(
+        90deg,
+        #00ff88,
+        #00ffaa
+    );
+    border-radius:10px;
+    transition:width 0.8s ease-in-out;
+    box-shadow:
+        0 0 10px rgba(0,255,136,0.6);
 }
 
 /* CPU cores */
@@ -157,4 +188,15 @@ h5 {
     height:18px;
     margin-right:6px;
     vertical-align:middle;
+}
+
+.network-chart {
+    margin-top:20px;
+    margin-bot:10px;
+    height:70px;
+}
+
+#network-chart {
+    width:100%;
+    height:80px;
 }

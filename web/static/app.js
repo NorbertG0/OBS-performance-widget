@@ -1,6 +1,11 @@
 let cpuCores = [];
 let cpuCorePage = 0;
 
+let downloadHistory = [];
+let uploadHistory = [];
+
+const chartPoints = 30;
+
 const coresPerPage = 4;
 let coresAnimating = false;
 
@@ -32,6 +37,84 @@ function animateNumber(element, newValue, suffix = "") {
     requestAnimationFrame(update);
 }
 
+function drawNetworkChart(){
+
+    const canvas =
+        document.getElementById("network-chart");
+
+    if(!canvas)
+        return;
+
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    canvas.width =
+        canvas.clientWidth;
+
+    canvas.height =
+        canvas.clientHeight;
+
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    function drawLine(data, color){
+
+        ctx.beginPath();
+
+        data.forEach((value,index)=>{
+
+            const x =
+                index *
+                (canvas.width / (chartPoints-1));
+
+
+            const max =
+                Math.max(
+                    ...downloadHistory,
+                    ...uploadHistory,
+                    10
+                );
+
+
+            const y =
+                canvas.height -
+                (value / max) *
+                canvas.height;
+
+
+            if(index===0)
+                ctx.moveTo(x,y);
+            else
+                ctx.lineTo(x,y);
+
+        });
+
+
+        ctx.strokeStyle=color;
+        ctx.lineWidth=2;
+        ctx.stroke();
+    }
+
+
+    drawLine(
+        downloadHistory,
+        "#00ff88"
+    );
+
+    drawLine(
+        uploadHistory,
+        "#00aaff"
+    );
+}
+
 async function updateStats() {
 
     try {
@@ -39,7 +122,7 @@ async function updateStats() {
         const data = await response.json();
 
         // CPU
-        animateNumber(document.getElementById("cpu"), data.cpu.percent, "%");
+        animateNumber(document.getElementById("cpu"), data.cpu.percent, " %");
 
         document.getElementById("cpu-bar").style.width =
             data.cpu.percent + "%";
@@ -48,14 +131,14 @@ async function updateStats() {
 
         // RAM
 
-        animateNumber(document.getElementById("ram"), data.ram.percent, "%");
+        animateNumber(document.getElementById("ram"), data.ram.percent, " %");
 
         document.getElementById("ram-bar").style.width =
             data.ram.percent + "%";
 
-        animateNumber(document.getElementById("ram-used"), data.ram.used, "GB");
+        animateNumber(document.getElementById("ram-used"), data.ram.used, " GB");
 
-        animateNumber(document.getElementById("ram-free"), data.ram.free, "GB");
+        animateNumber(document.getElementById("ram-free"), data.ram.free, " GB");
 
         document.getElementById("module1-size").innerText =
             data.ram.modules[0].size + " GB";
@@ -75,19 +158,19 @@ async function updateStats() {
             document.getElementById("name").innerText =
                 data.nvidia_gpu.name;
 
-            animateNumber(document.getElementById("gpu"), data.nvidia_gpu.gpu_load, "%");
+            animateNumber(document.getElementById("gpu"), data.nvidia_gpu.gpu_load, " %");
 
             document.getElementById("gpu-bar").style.width =
                 data.nvidia_gpu.gpu_load + "%";
 
             document.getElementById("temp").innerText =
-                data.nvidia_gpu.temperature + "°C";
+                data.nvidia_gpu.temperature + " °C";
 
             document.getElementById("power").innerText =
                 data.nvidia_gpu.power + " W";
 
             document.getElementById("fan_speed").innerText =
-                data.nvidia_gpu.fan_speed + "%";
+                data.nvidia_gpu.fan_speed + " %";
 
             const memoryUsed = Number(data.nvidia_gpu.memory_used);
                 const memoryTotal = Number(data.nvidia_gpu.memory_total);
@@ -102,9 +185,27 @@ async function updateStats() {
         }
 
         // NETWORK
-        animateNumber(document.getElementById("download"), data.network.download, "Mbps");
+        animateNumber(document.getElementById("download"), data.network.download, " Mbps");
 
-        animateNumber(document.getElementById("upload"), data.network.upload, "Mbps");
+        downloadHistory.push(
+                data.network.download
+            );
+
+            uploadHistory.push(
+                data.network.upload
+            );
+
+
+            if(downloadHistory.length > chartPoints)
+                downloadHistory.shift();
+
+            if(uploadHistory.length > chartPoints)
+                uploadHistory.shift();
+
+
+            drawNetworkChart();
+
+        animateNumber(document.getElementById("upload"), data.network.upload, " Mbps");
 
         document.getElementById("total_download").innerText =
             data.network.total_download + " GB";
@@ -165,7 +266,7 @@ function renderCpuCores(){
                         </span>
 
                         <span>
-                            ${usage}%
+                            ${usage} %
                         </span>
 
                     </div>
@@ -238,7 +339,7 @@ setInterval(updateStats, 1000);
 
 setInterval(switchCpuCores, 5000);
 
-setInterval(switchPage, 6000);
+setInterval(switchPage, 5000);
 
 renderCpuCores();
 
