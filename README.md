@@ -1,2 +1,4 @@
 # OBS-performance-widget
-![demo]([./assets/demo.gif](./assets/demo.gif))
+<p align="center">
+<img src="assets/demo.gif" alt="demo" width="50%">
+</p>
