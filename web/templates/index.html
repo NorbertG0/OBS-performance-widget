@@ -4,59 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <title>PC Monitor</title>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
 </head>
 
 
 <body>
+<script src="https://unpkg.com/lucide@latest"></script>
+
 <div class="card">
     <!-- CPU -->
     <div class="page active" id="cpu-page">
-        <h3>CPU</h3>
-        <div class="row">
+        <h4><i data-lucide="cpu" class="main-card-icon"></i>CPU</h4>
+        <div class="cpu-total">
             <span>Total</span>
             <span id="cpu">0%</span>
         </div>
         <div class="bar">
             <div id="cpu-bar" class="fill"></div>
         </div>
-        <h4>CPU Cores</h4>
+        <h5>CPU Cores</h5>
         <div id="cpu-cores"></div>
     </div>
 
     <!-- GPU -->
     <div class="page" id="gpu-page">
-        <h3>GPU</h3>
-        <div class="row">
+        <h4><i data-lucide="monitor" class="main-card-icon"></i>GPU</h4>
+        <div class="gpu-row">
             <span>Name</span>
             <span id="name">-</span>
         </div>
-        <div class="row">
+        <div class="gpu-row">
             <span>Load</span>
             <span id="gpu">0%</span>
         </div>
-        <div class="row">
-            <span>Memory total</span>
-            <span id="memory_total">0GB</span>
+        <div class="bar">
+            <div id="gpu-bar" class="fill"></div>
         </div>
-        <div class="row">
+        <div class="gpu-row">
             <span>Memory used</span>
             <span id="memory_used">0GB</span>
         </div>
-        <div class="row">
-            <span>Memory free</span>
-            <span id="memory_free">0GB</span>
+        <div class="bar">
+            <div id="memory_used-bar" class="fill"></div>
         </div>
-        <div class="row">
+        <div class="gpu-row">
             <span>Power</span>
             <span id="power">0 W</span>
         </div>
-        <div class="row">
+        <div class="gpu-row">
             <span>Temperature</span>
             <span id="temp">0°C</span>
         </div>
-        <div class="row">
+        <div class="gpu-row">
             <span>Fan speed</span>
             <span id="fan_speed">0 %</span>
         </div>
@@ -64,28 +66,28 @@
 
     <!-- RAM -->
     <div class="page" id="ram-page">
-        <h3>RAM</h3>
-        <div class="row">
+        <h4><i data-lucide="memory-stick" class="main-card-icon"></i>RAM</h4>
+        <div class="ram-row">
             <span>Usage</span>
             <span id="ram">0%</span>
         </div>
         <div class="bar">
             <div id="ram-bar" class="fill"></div>
         </div>
-        <div class="row">
+        <div class="ram-row">
             <span>Used</span>
             <span id="ram-used">0 GB</span>
         </div>
-        <div class="row">
+        <div class="ram-row">
             <span>Free</span>
             <span id="ram-free">0 GB</span>
         </div>
-        <div class="row">
+        <div class="ram-row">
             <span>RAM 1</span>
             <span id="module1-size">0 GB</span>
             <span id="module1-speed">0 MHz</span>
         </div>
-        <div class="row">
+        <div class="ram-row">
             <span>RAM 2</span>
             <span id="module2-size">0 GB</span>
             <span id="module2-speed">0 MHz</span>
@@ -94,21 +96,21 @@
 
     <!-- NETWORK -->
     <div class="page" id="network-page">
-        <h3>NETWORK</h3>
+        <h4><i data-lucide="wifi" class="main-card-icon"></i>NETWORK</h4>
         <div class="row">
-            <span>Download</span>
+            <span><i data-lucide="arrow-down" class="download-icon"></i>Download</span>
             <span id="download">0 Mbps</span>
         </div>
         <div class="row">
-            <span>Upload</span>
+            <span><i data-lucide="arrow-up" class="upload-icon"></i>Upload</span>
             <span id="upload">0 Mbps</span>
         </div>
          <div class="row">
-            <span>Total download</span>
+            <span><i data-lucide="arrow-down" class="download-icon"></i>Total download</span>
             <span id="total_download">0 Mbps</span>
         </div>
         <div class="row">
-            <span>Total upload</span>
+            <span><i data-lucide="arrow-up" class="upload-icon"></i>Total upload</span>
             <span id="total_upload">0 Mbps</span>
         </div>
     </div>

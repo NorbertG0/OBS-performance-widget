@@ -4,6 +4,33 @@ let cpuCorePage = 0;
 const coresPerPage = 4;
 let coresAnimating = false;
 
+function animateNumber(element, newValue, suffix = "") {
+
+    const oldValue = parseFloat(element.innerText) || 0;
+
+    const duration = 800;
+    const startTime = performance.now();
+
+    function update(currentTime) {
+
+        const progress = Math.min(
+            (currentTime - startTime) / duration,
+            1
+        );
+
+        const value =
+            oldValue + (newValue - oldValue) * progress;
+
+        element.innerText =
+            value.toFixed(1) + suffix;
+
+        if(progress < 1) {
+            requestAnimationFrame(update);
+        }
+    }
+
+    requestAnimationFrame(update);
+}
 
 async function updateStats() {
 
@@ -12,8 +39,7 @@ async function updateStats() {
         const data = await response.json();
 
         // CPU
-        document.getElementById("cpu").innerText =
-            data.cpu.percent.toFixed(1) + "%";
+        animateNumber(document.getElementById("cpu"), data.cpu.percent, "%");
 
         document.getElementById("cpu-bar").style.width =
             data.cpu.percent + "%";
@@ -21,17 +47,15 @@ async function updateStats() {
         cpuCores = data.cpu.cores;
 
         // RAM
-        document.getElementById("ram").innerText =
-            data.ram.percent + "%";
+
+        animateNumber(document.getElementById("ram"), data.ram.percent, "%");
 
         document.getElementById("ram-bar").style.width =
             data.ram.percent + "%";
 
-        document.getElementById("ram-used").innerText =
-            data.ram.used + " GB";
+        animateNumber(document.getElementById("ram-used"), data.ram.used, "GB");
 
-        document.getElementById("ram-free").innerText =
-            data.ram.free + " GB";
+        animateNumber(document.getElementById("ram-free"), data.ram.free, "GB");
 
         document.getElementById("module1-size").innerText =
             data.ram.modules[0].size + " GB";
@@ -51,7 +75,9 @@ async function updateStats() {
             document.getElementById("name").innerText =
                 data.nvidia_gpu.name;
 
-            document.getElementById("gpu").innerText =
+            animateNumber(document.getElementById("gpu"), data.nvidia_gpu.gpu_load, "%");
+
+            document.getElementById("gpu-bar").style.width =
                 data.nvidia_gpu.gpu_load + "%";
 
             document.getElementById("temp").innerText =
@@ -63,25 +89,26 @@ async function updateStats() {
             document.getElementById("fan_speed").innerText =
                 data.nvidia_gpu.fan_speed + "%";
 
-            document.getElementById("memory_total").innerText =
-                data.nvidia_gpu.memory_total + " GB";
+            const memoryUsed = Number(data.nvidia_gpu.memory_used);
+                const memoryTotal = Number(data.nvidia_gpu.memory_total);
 
-            document.getElementById("memory_used").innerText =
-                data.nvidia_gpu.memory_used + " GB";
+             document.getElementById("memory_used").innerText =
+               `${memoryUsed.toFixed(1)} / ${memoryTotal.toFixed(1)} GB`;
 
-            document.getElementById("memory_free").innerText =
-                data.nvidia_gpu.memory_free + " GB";
+            const memoryPercent = (memoryUsed / memoryTotal) * 100;
+
+            document.getElementById("memory_used-bar").style.width =
+                memoryPercent + "%";
         }
 
         // NETWORK
-        document.getElementById("download").innerText =
-            data.network.download + " Mbps";
+        animateNumber(document.getElementById("download"), data.network.download, "Mbps");
 
-        document.getElementById("upload").innerText =
-            data.network.upload + " Mbps";
+        animateNumber(document.getElementById("upload"), data.network.upload, "Mbps");
 
         document.getElementById("total_download").innerText =
             data.network.total_download + " GB";
+
 
         document.getElementById("total_upload").innerText =
             data.network.total_upload + " GB";
@@ -211,8 +238,10 @@ setInterval(updateStats, 1000);
 
 setInterval(switchCpuCores, 5000);
 
-setInterval(switchPage, 15000);
+setInterval(switchPage, 6000);
 
 renderCpuCores();
 
 switchPage();
+
+lucide.createIcons();
