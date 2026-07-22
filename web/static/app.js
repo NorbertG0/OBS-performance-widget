@@ -12,97 +12,53 @@ let coresAnimating = false;
 function animateNumber(element, newValue, suffix = "") {
 
     const oldValue = parseFloat(element.innerText) || 0;
-
     const duration = 800;
     const startTime = performance.now();
 
     function update(currentTime) {
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+        const value = oldValue + (newValue - oldValue) * progress;
 
-        const progress = Math.min(
-            (currentTime - startTime) / duration,
-            1
-        );
-
-        const value =
-            oldValue + (newValue - oldValue) * progress;
-
-        element.innerText =
-            value.toFixed(1) + suffix;
+        element.innerText = value.toFixed(1) + suffix;
 
         if(progress < 1) {
             requestAnimationFrame(update);
         }
     }
-
     requestAnimationFrame(update);
 }
 
 function drawNetworkChart(){
 
-    const canvas =
-        document.getElementById("network-chart");
+    const canvas = document.getElementById("network-chart");
 
     if(!canvas)
         return;
+    const ctx = canvas.getContext("2d");
 
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
 
-    const ctx =
-        canvas.getContext("2d");
-
-
-    canvas.width =
-        canvas.clientWidth;
-
-    canvas.height =
-        canvas.clientHeight;
-
-
-    ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
-
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     function drawLine(data, color){
-
         ctx.beginPath();
 
         data.forEach((value,index)=>{
-
-            const x =
-                index *
-                (canvas.width / (chartPoints-1));
-
-
-            const max =
-                Math.max(
-                    ...downloadHistory,
-                    ...uploadHistory,
-                    10
-                );
-
-
-            const y =
-                canvas.height -
-                (value / max) *
-                canvas.height;
-
+            const x = index * (canvas.width / (chartPoints-1));
+            const max = Math.max(...downloadHistory, ...uploadHistory, 10);
+            const y = canvas.height - (value / max) * canvas.height;
 
             if(index===0)
                 ctx.moveTo(x,y);
             else
                 ctx.lineTo(x,y);
-
         });
-
 
         ctx.strokeStyle=color;
         ctx.lineWidth=2;
         ctx.stroke();
     }
-
 
     drawLine(
         downloadHistory,
@@ -124,41 +80,30 @@ async function updateStats() {
         // CPU
         animateNumber(document.getElementById("cpu"), data.cpu.percent, " %");
 
-        document.getElementById("cpu-bar").style.width =
-            data.cpu.percent + "%";
-
+        document.getElementById("cpu-bar").style.width = data.cpu.percent + "%";
         cpuCores = data.cpu.cores;
 
         // RAM
 
         animateNumber(document.getElementById("ram"), data.ram.percent, " %");
-
-        document.getElementById("ram-bar").style.width =
-            data.ram.percent + "%";
-
+        document.getElementById("ram-bar").style.width = data.ram.percent + "%";
         animateNumber(document.getElementById("ram-used"), data.ram.used, " GB");
-
         animateNumber(document.getElementById("ram-free"), data.ram.free, " GB");
 
         if (data.ram.modules[0]) {
-            document.getElementById("module1-size").innerText =
-                data.ram.modules[0].size + " GB";
-
-            document.getElementById("module1-speed").innerText =
-                data.ram.modules[0].speed + " MHz";
-        } else {
+            document.getElementById("module1-size").innerText = data.ram.modules[0].size + " GB";
+            document.getElementById("module1-speed").innerText = data.ram.modules[0].speed + " MHz";
+        }
+        else {
             document.getElementById("module1-size").innerText = "-";
             document.getElementById("module1-speed").innerText = "-";
         }
 
-
         if (data.ram.modules[1]) {
-            document.getElementById("module2-size").innerText =
-                data.ram.modules[1].size + " GB";
-
-            document.getElementById("module2-speed").innerText =
-                data.ram.modules[1].speed + " MHz";
-        } else {
+            document.getElementById("module2-size").innerText = data.ram.modules[1].size + " GB";
+            document.getElementById("module2-speed").innerText = data.ram.modules[1].speed + " MHz";
+        }
+        else {
             document.getElementById("module2-size").innerText = "-";
             document.getElementById("module2-speed").innerText = "-";
         }
@@ -166,33 +111,24 @@ async function updateStats() {
         // GPU
         if(data.nvidia_gpu) {
 
-            document.getElementById("name").innerText =
-                data.nvidia_gpu.name;
+            document.getElementById("name").innerText = data.nvidia_gpu.name;
 
             animateNumber(document.getElementById("gpu"), data.nvidia_gpu.gpu_load, " %");
+            document.getElementById("gpu-bar").style.width = data.nvidia_gpu.gpu_load + "%";
 
-            document.getElementById("gpu-bar").style.width =
-                data.nvidia_gpu.gpu_load + "%";
+            document.getElementById("temp").innerText = data.nvidia_gpu.temperature + " °C";
+            document.getElementById("power").innerText = data.nvidia_gpu.power + " W";
 
-            document.getElementById("temp").innerText =
-                data.nvidia_gpu.temperature + " °C";
-
-            document.getElementById("power").innerText =
-                data.nvidia_gpu.power + " W";
-
-            document.getElementById("fan_speed").innerText =
-                data.nvidia_gpu.fan_speed + " %";
+            document.getElementById("fan_speed").innerText = data.nvidia_gpu.fan_speed + " %";
 
             const memoryUsed = Number(data.nvidia_gpu.memory_used);
-                const memoryTotal = Number(data.nvidia_gpu.memory_total);
+            const memoryTotal = Number(data.nvidia_gpu.memory_total);
 
-             document.getElementById("memory_used").innerText =
-               `${memoryUsed.toFixed(1)} / ${memoryTotal.toFixed(1)} GB`;
+            document.getElementById("memory_used").innerText = `${memoryUsed.toFixed(1)} / ${memoryTotal.toFixed(1)} GB`;
 
             const memoryPercent = (memoryUsed / memoryTotal) * 100;
 
-            document.getElementById("memory_used-bar").style.width =
-                memoryPercent + "%";
+            document.getElementById("memory_used-bar").style.width = memoryPercent + "%";
         }
         else {
             document.getElementById("name").innerText = "-";
@@ -210,14 +146,8 @@ async function updateStats() {
         // NETWORK
         animateNumber(document.getElementById("download"), data.network.download, " Mbps");
 
-        downloadHistory.push(
-                data.network.download
-            );
-
-            uploadHistory.push(
-                data.network.upload
-            );
-
+        downloadHistory.push(data.network.download);
+        uploadHistory.push(data.network.upload);
 
             if(downloadHistory.length > chartPoints)
                 downloadHistory.shift();
@@ -225,22 +155,17 @@ async function updateStats() {
             if(uploadHistory.length > chartPoints)
                 uploadHistory.shift();
 
-
             drawNetworkChart();
 
         animateNumber(document.getElementById("upload"), data.network.upload, " Mbps");
 
-        document.getElementById("total_download").innerText =
-            data.network.total_download + " GB";
-
-
-        document.getElementById("total_upload").innerText =
-            data.network.total_upload + " GB";
+        document.getElementById("total_download").innerText = data.network.total_download + " GB";
+        document.getElementById("total_upload").innerText = data.network.total_upload + " GB";
 
         // DISKS
         const disksContainer = document.getElementById("disks");
-
         const disks = data.disks.slice(0, 5);
+
        if (disksContainer.children.length !== disks.length) {
 
             disksContainer.innerHTML = "";
@@ -262,34 +187,24 @@ async function updateStats() {
 }
 
         disks.forEach((disk, index) => {
-            animateNumber(
-                document.getElementById(`disk-percent-${index}`),
-                disk.percent,
-                " %"
-            );
-
-            document.getElementById(`disk-bar-${index}`).style.width =
-                `${disk.percent}%`;
+            animateNumber(document.getElementById(`disk-percent-${index}`), disk.percent, " %");
+            document.getElementById(`disk-bar-${index}`).style.width = `${disk.percent}%`;
         });
     }
 
     catch(error){
-
         console.error(
             "Stats error:",
             error
         );
-
     }
-
 }
 
 
 // CPU CORES
 function renderCpuCores(){
 
-    const container =
-        document.getElementById("cpu-cores");
+    const container = document.getElementById("cpu-cores");
 
     if(!container || coresAnimating)
         return;
@@ -301,22 +216,14 @@ function renderCpuCores(){
 
     setTimeout(()=>{
         container.innerHTML = "";
-        const start =
-            cpuCorePage * coresPerPage;
-
-        const end =
-            start + coresPerPage;
-
-        const cores =
-            cpuCores.slice(start,end);
+        const start = cpuCorePage * coresPerPage;
+        const end = start + coresPerPage;
+        const cores = cpuCores.slice(start,end);
 
         cores.forEach((usage,index)=>{
-
-            const coreNumber =
-                start + index + 1;
+            const coreNumber = start + index + 1;
 
             container.innerHTML += `
-
                 <div class="core">
                     <div class="core-header">
                         <span>
@@ -349,17 +256,12 @@ function switchCpuCores(){
     if(cpuCores.length <= coresPerPage)
         return;
 
-    const pages =
-        Math.ceil(
-            cpuCores.length / coresPerPage
-        );
-
+    const pages = Math.ceil(cpuCores.length / coresPerPage);
     cpuCorePage++;
 
     if(cpuCorePage >= pages){
         cpuCorePage = 0;
     }
-
     renderCpuCores();
 }
 
@@ -393,15 +295,9 @@ function switchPage(){
 }
 
 updateStats();
-
 setInterval(updateStats, 1000);
-
 setInterval(switchCpuCores, 5000);
-
 setInterval(switchPage, 15000);
-
 renderCpuCores();
-
 switchPage();
-
 lucide.createIcons();
