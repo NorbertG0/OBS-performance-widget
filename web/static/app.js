@@ -140,17 +140,28 @@ async function updateStats() {
 
         animateNumber(document.getElementById("ram-free"), data.ram.free, " GB");
 
-        document.getElementById("module1-size").innerText =
-            data.ram.modules[0].size + " GB";
+        if (data.ram.modules[0]) {
+            document.getElementById("module1-size").innerText =
+                data.ram.modules[0].size + " GB";
 
-        document.getElementById("module1-speed").innerText =
-            data.ram.modules[0].speed + " MHz";
+            document.getElementById("module1-speed").innerText =
+                data.ram.modules[0].speed + " MHz";
+        } else {
+            document.getElementById("module1-size").innerText = "-";
+            document.getElementById("module1-speed").innerText = "-";
+        }
 
-        document.getElementById("module2-size").innerText =
-            data.ram.modules[1].size + " GB";
 
-        document.getElementById("module2-speed").innerText =
-            data.ram.modules[1].speed + " MHz";
+        if (data.ram.modules[1]) {
+            document.getElementById("module2-size").innerText =
+                data.ram.modules[1].size + " GB";
+
+            document.getElementById("module2-speed").innerText =
+                data.ram.modules[1].speed + " MHz";
+        } else {
+            document.getElementById("module2-size").innerText = "-";
+            document.getElementById("module2-speed").innerText = "-";
+        }
 
         // GPU
         if(data.nvidia_gpu) {
@@ -182,6 +193,18 @@ async function updateStats() {
 
             document.getElementById("memory_used-bar").style.width =
                 memoryPercent + "%";
+        }
+        else {
+            document.getElementById("name").innerText = "-";
+
+            animateNumber(document.getElementById("gpu"), 0, " %");
+
+            document.getElementById("gpu-bar").style.width = "0%";
+            document.getElementById("temp").innerText = "-";
+            document.getElementById("power").innerText = "-";
+            document.getElementById("fan_speed").innerText = "-";
+            document.getElementById("memory_used").innerText = "-";
+            document.getElementById("memory_used-bar").style.width = "0%";
         }
 
         // NETWORK
@@ -217,11 +240,12 @@ async function updateStats() {
         // DISKS
         const disksContainer = document.getElementById("disks");
 
-        if (disksContainer.children.length !== data.disks.length) {
+        const disks = data.disks.slice(0, 5);
+       if (disksContainer.children.length !== disks.length) {
 
             disksContainer.innerHTML = "";
 
-            data.disks.forEach((disk, index) => {
+            disks.forEach((disk, index) => {
                 disksContainer.innerHTML += `
                     <div class="disk">
                         <div class="disk-row">
@@ -237,7 +261,7 @@ async function updateStats() {
             });
 }
 
-        data.disks.forEach((disk, index) => {
+        disks.forEach((disk, index) => {
             animateNumber(
                 document.getElementById(`disk-percent-${index}`),
                 disk.percent,
@@ -374,7 +398,7 @@ setInterval(updateStats, 1000);
 
 setInterval(switchCpuCores, 5000);
 
-setInterval(switchPage, 3000);
+setInterval(switchPage, 15000);
 
 renderCpuCores();
 
