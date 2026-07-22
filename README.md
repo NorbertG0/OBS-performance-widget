@@ -9,6 +9,16 @@ A real-time hardware monitoring widget. The application collects system performa
 <img alt="image" src="https://github.com/user-attachments/assets/1965b71d-bfa4-4b07-a49a-c66bb9bc0a5e" width="34%"/>
 </p>
 
+<p align="center">
+<img alt="image" src="https://github.com/user-attachments/assets/9553b09d-643d-4c4b-a07d-86149c9b02bb" width="30%" />
+<img alt="image" src="https://github.com/user-attachments/assets/59e0b758-a75d-4996-a0a0-c7ad25ac87ef" width="30%" />
+</p>
+
+<p align="center">
+<img alt="image" src="https://github.com/user-attachments/assets/b082cc66-b46f-4afd-95b2-6f405876a0e7" width="30%"/>
+<img alt="image" src="https://github.com/user-attachments/assets/7be5c8b7-d3f1-43e0-80ae-57ca1b7e2b8c" width="30%"/>
+</p>
+
 ## API endpoints
 
 ### Get system statistics
