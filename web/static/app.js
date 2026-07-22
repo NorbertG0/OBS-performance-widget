@@ -213,6 +213,40 @@ async function updateStats() {
 
         document.getElementById("total_upload").innerText =
             data.network.total_upload + " GB";
+
+        // DISKS
+        const disksContainer = document.getElementById("disks");
+
+        if (disksContainer.children.length !== data.disks.length) {
+
+            disksContainer.innerHTML = "";
+
+            data.disks.forEach((disk, index) => {
+                disksContainer.innerHTML += `
+                    <div class="disk">
+                        <div class="disk-row">
+                            <span>${disk.name}</span>
+                            <span id="disk-percent-${index}"></span>
+                        </div>
+
+                        <div class="bar">
+                            <div id="disk-bar-${index}" class="fill"></div>
+                        </div>
+                    </div>
+                `;
+            });
+}
+
+        data.disks.forEach((disk, index) => {
+            animateNumber(
+                document.getElementById(`disk-percent-${index}`),
+                disk.percent,
+                " %"
+            );
+
+            document.getElementById(`disk-bar-${index}`).style.width =
+                `${disk.percent}%`;
+        });
     }
 
     catch(error){
@@ -310,7 +344,8 @@ const pages = [
     "cpu-page",
     "gpu-page",
     "ram-page",
-    "network-page"
+    "network-page",
+    "disks-page"
 ];
 
 let currentPage = 0;
@@ -339,7 +374,7 @@ setInterval(updateStats, 1000);
 
 setInterval(switchCpuCores, 5000);
 
-setInterval(switchPage, 15000);
+setInterval(switchPage, 3000);
 
 renderCpuCores();
 

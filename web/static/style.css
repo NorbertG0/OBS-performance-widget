@@ -83,6 +83,18 @@ h5 {
     font-size:15px;
 }
 
+.disk-row {
+    display:flex;
+    justify-content:space-between;
+    margin:10px 0;
+    font-size:12px;
+}
+
+#disks .bar {
+    height:6px;
+}
+
+
 .bar {
     height:10px;
     background:#333;
