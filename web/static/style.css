@@ -62,9 +62,12 @@ h5 {
     font-size:15px;
 }
 
+.cpu-total span:last-child,
+.core-header span:last-child,
 .gpu-row span:last-child,
 .ram-row span:last-child,
-.network-row span:last-child
+.network-row span:last-child,
+.disk-row span:last-child
 {
     font-weight:700;
 }
