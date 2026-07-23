@@ -116,6 +116,26 @@ h5 {
         0 0 10px rgba(0,255,136,0.6);
 }
 
+.fill.warning {
+        background:linear-gradient(
+        90deg,
+        #ffb000,
+        #ffd54a
+    );
+    box-shadow:
+        0 0 10px rgba(255,176,0,.6);
+}
+
+.fill.danger {
+    background:linear-gradient(
+        90deg,
+        #ff3b30,
+        #ff6b6b
+    );
+    box-shadow:
+        0 0 10px rgba(255,59,48,.6);
+}
+
 /* CPU cores */
 .core {
     margin-bottom:8px;

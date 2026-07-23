@@ -71,6 +71,20 @@ function drawNetworkChart(){
     );
 }
 
+
+function updateBar(bar, value) {
+
+    bar.style.width = value + "%";
+
+    bar.classList.remove("warning", "danger");
+
+    if (value >= 90) {
+        bar.classList.add("danger");
+    } else if (value >= 75) {
+        bar.classList.add("warning");
+    }
+}
+
 async function updateStats() {
 
     try {
@@ -79,14 +93,13 @@ async function updateStats() {
 
         // CPU
         animateNumber(document.getElementById("cpu"), data.cpu.percent, " %");
-
-        document.getElementById("cpu-bar").style.width = data.cpu.percent + "%";
+        updateBar(document.getElementById("cpu-bar"), data.cpu.percent);
         cpuCores = data.cpu.cores;
 
         // RAM
 
         animateNumber(document.getElementById("ram"), data.ram.percent, " %");
-        document.getElementById("ram-bar").style.width = data.ram.percent + "%";
+        updateBar(document.getElementById("ram-bar"), data.ram.percent);
         animateNumber(document.getElementById("ram-used"), data.ram.used, " GB");
         animateNumber(document.getElementById("ram-free"), data.ram.free, " GB");
 
@@ -114,7 +127,7 @@ async function updateStats() {
             document.getElementById("name").innerText = data.nvidia_gpu.name;
 
             animateNumber(document.getElementById("gpu"), data.nvidia_gpu.gpu_load, " %");
-            document.getElementById("gpu-bar").style.width = data.nvidia_gpu.gpu_load + "%";
+            updateBar(document.getElementById("gpu-bar"), data.nvidia_gpu.gpu_load);
 
             document.getElementById("temp").innerText = data.nvidia_gpu.temperature + " °C";
             document.getElementById("power").innerText = data.nvidia_gpu.power + " W";
@@ -128,7 +141,7 @@ async function updateStats() {
 
             const memoryPercent = (memoryUsed / memoryTotal) * 100;
 
-            document.getElementById("memory_used-bar").style.width = memoryPercent + "%";
+            updateBar(document.getElementById("memory_used-bar"), memoryPercent);
         }
         else {
             document.getElementById("name").innerText = "-";
@@ -188,7 +201,7 @@ async function updateStats() {
 
         disks.forEach((disk, index) => {
             animateNumber(document.getElementById(`disk-percent-${index}`), disk.percent, " %");
-            document.getElementById(`disk-bar-${index}`).style.width = `${disk.percent}%`;
+            updateBar(document.getElementById(`disk-bar-${index}`), `${disk.percent}`);
         });
     }
 
@@ -220,8 +233,12 @@ function renderCpuCores(){
         const end = start + coresPerPage;
         const cores = cpuCores.slice(start,end);
 
+
         cores.forEach((usage,index)=>{
             const coreNumber = start + index + 1;
+            const level =
+            usage >= 90 ? "danger" :
+            usage >= 75 ? "warning" : "";
 
             container.innerHTML += `
                 <div class="core">
@@ -238,7 +255,7 @@ function renderCpuCores(){
 
                     <div class="bar">
                         <div
-                            class="fill"
+                            class="fill ${level}"
                             style="width:${usage}%">
                         </div>
                     </div>
@@ -297,7 +314,7 @@ function switchPage(){
 updateStats();
 setInterval(updateStats, 1000);
 setInterval(switchCpuCores, 5000);
-setInterval(switchPage, 15000);
+setInterval(switchPage, 3000);
 renderCpuCores();
 switchPage();
 lucide.createIcons();
