@@ -20,7 +20,9 @@ A real-time hardware monitoring widget. The application collects system performa
 
 ## Gif demo
 
+<p align="center">
 <img src="assets/demo.gif" alt="demo" width="50%">
+</p>
 
 ## API endpoints
 
