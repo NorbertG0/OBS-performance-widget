@@ -5,19 +5,22 @@
 A real-time hardware monitoring widget. The application collects system performance metrics and exposes them through a REST API which can be used as an OBS browser source.
 
 <p align="center">
+<img alt="image" src="https://github.com/user-attachments/assets/9a2721b9-5c09-4375-85d2-1f5185f461a0" width="45%"/>
+<img width="45%" alt="panel5" src="https://github.com/user-attachments/assets/57d5092e-f89f-4e09-94b5-dc1c81db256e" />
+</p>
+
+<p align="center">
+<img width="45%" alt="panel2" src="https://github.com/user-attachments/assets/faff8567-7ed7-40a3-87dd-66431722fa95" />
+<img width="45%" alt="panel3" src="https://github.com/user-attachments/assets/e48221e9-373e-4271-ad1b-ce639a58e54e" />
+</p>
+
+<p align="center">
+  <img width="45%" alt="panel4" src="https://github.com/user-attachments/assets/0c4169be-4335-4a75-8d0a-594a0e7d6bab" />
+</p>
+
+## Gif demo
+
 <img src="assets/demo.gif" alt="demo" width="50%">
-<img alt="image" src="https://github.com/user-attachments/assets/1965b71d-bfa4-4b07-a49a-c66bb9bc0a5e" width="34%"/>
-</p>
-
-<p align="center">
-<img alt="image" src="https://github.com/user-attachments/assets/9553b09d-643d-4c4b-a07d-86149c9b02bb" width="30%" />
-<img alt="image" src="https://github.com/user-attachments/assets/59e0b758-a75d-4996-a0a0-c7ad25ac87ef" width="30%" />
-</p>
-
-<p align="center">
-<img alt="image" src="https://github.com/user-attachments/assets/b082cc66-b46f-4afd-95b2-6f405876a0e7" width="30%"/>
-<img alt="image" src="https://github.com/user-attachments/assets/7be5c8b7-d3f1-43e0-80ae-57ca1b7e2b8c" width="30%"/>
-</p>
 
 ## API endpoints
 
