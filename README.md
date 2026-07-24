@@ -16,9 +16,10 @@ A real-time hardware monitoring widget. The application collects system performa
 
 <p align="center">
   <img width="45%" alt="panel4" src="https://github.com/user-attachments/assets/0c4169be-4335-4a75-8d0a-594a0e7d6bab" />
+  <img width="45%" alt="panel6" src="https://github.com/user-attachments/assets/411288d7-f71c-42cf-bf82-88af81422c86" />
 </p>
 
-## Gif demo
+## GIF demo
 
 <p align="center">
 <img src="assets/demo.gif" alt="demo" width="50%">
